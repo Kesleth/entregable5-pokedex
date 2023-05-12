@@ -35,7 +35,7 @@ const Pokedex = () => {
     const pokemonInPage = pokemonsByName.slice(sliceStart, sliceEnd);
 
     //ultima pagina
-    const lastPage = Math.ceil(pokemonsByName.length / POKEMONS_PER_PAGE) || 1
+    const lastPage = Math.ceil(pokemonsByName.length / POKEMONS_PER_PAGE) || 1;
 
     //bloque actual
     const PAGES_PER_BLOCK = 3;
@@ -97,45 +97,58 @@ const Pokedex = () => {
       const URL = `https://pokeapi.co/api/v2/type/${cuerrenType}/`;
 
       axios
-      .get(URL)
-      .then((res) => {
-       const pokemonsbytype = res.data.pokemon.map(pokemon => pokemon.pokemon)
-       setPokemons(pokemonsbytype)
-      })
-      .catch((err) => console.log(err));
+        .get(URL)
+        .then((res) => {
+          const pokemonsbytype = res.data.pokemon.map(
+            (pokemon) => pokemon.pokemon
+          );
+          setPokemons(pokemonsbytype);
+        })
+        .catch((err) => console.log(err));
     }
-  },[cuerrenType])
-
-  useEffect(() => {
-    setCurrentPage(1)
-  },[pokemonName, cuerrenType]);
-
-  useEffect(() => {
-    setPokemonName("") 
-    input.current.value = ""
   }, [cuerrenType]);
-  
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [pokemonName, cuerrenType]);
+
+  useEffect(() => {
+    setPokemonName("");
+    input.current.value = "";
+  }, [cuerrenType]);
 
   return (
     <section className="min-h-screen">
       <Header />
       <section className="py-6 px-2">
         <h3 className=" text-center text-2xl font-semibold">
-          <b className="text-3xl font-bold text-red-600">Welcome {nameTrainerSlice},{" "} </b> here you can fine
-          your favorite pokemon
+          <b className="text-3xl font-bold text-red-600">
+            Welcome {nameTrainerSlice},{" "}
+          </b>{" "}
+          here you can fine your favorite pokemon
         </h3>
 
-        <form className=" flex flex-col items-center mb-10 sm:mx-auto sm:max-w-sm lg:max-w-md justify-center" onSubmit={hanldeSubmit}>
-          <div  className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 mb-5">
-            <input ref={input} className="outline-none shadow-md shadow-gray-500/20 px-4 py-3 w-[120px] h-[60px] flex-grow rounded-[15px] "
+        <form
+          className=" flex flex-col items-center mb-10 sm:mx-auto sm:max-w-sm lg:max-w-md justify-center"
+          onSubmit={hanldeSubmit}
+        >
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-5 mb-5">
+            <input
+              ref={input}
+              className="outline-none shadow-md shadow-gray-500/20 px-4 py-3 w-[120px] h-[60px] flex-grow rounded-[15px] "
               id="pokemonName"
               type="text"
               placeholder="Search your pokemon"
             />
-            <button className="px-2 h-[60px] w-[60px] bg-red-600 font-semibold rounded-xl hover:animate-bounce">Search</button>
+            <button className="px-2 h-[60px] w-[60px] bg-red-600 font-semibold rounded-xl hover:animate-bounce">
+              Search
+            </button>
           </div>
 
-          <select className=" flex mt-2 justify-end :animate-bounce mx-auto max-w-full" onChange={(e)=> setcuerrenType(e.target.value)}>
+          <select
+            className=" flex mt-2 justify-end :animate-bounce mx-auto max-w-full"
+            onChange={(e) => setcuerrenType(e.target.value)}
+          >
             <option value="">All</option>
             {types.map((type) => (
               <option className="capitalize" value={type} key={type}>
@@ -145,30 +158,55 @@ const Pokedex = () => {
           </select>
         </form>
       </section>
-     
-      
+
       {/* paginacion */}
 
       <ul className="flex gap-2 justify-center mb-10 px-2 flex-wrap">
-
         {/* primera pagina */}
-        <li onClick={() => setCurrentPage(1)} className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer"><i className='bx bx-first-page' ></i></li>
+        <li
+          onClick={() => setCurrentPage(1)}
+          className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer"
+        >
+          <i className="bx bx-first-page"></i>
+        </li>
 
         {/* pagina anterior */}
-        <li onClick={handleClickPreviusPage} className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer"><i className='bx bxs-left-arrow'></i></li>
+        <li
+          onClick={handleClickPreviusPage}
+          className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer"
+        >
+          <i className="bx bxs-left-arrow"></i>
+        </li>
 
         {/* lista de paginas */}
-        {
-          pagesInBlock.map(numberPage => <li onClick={() => setCurrentPage(numberPage)} className={`p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer ${numberPage === currentPage && 'bg-gray-600'}`} key={numberPage}>{numberPage} </li>)
-        }
+        {pagesInBlock.map((numberPage) => (
+          <li
+            onClick={() => setCurrentPage(numberPage)}
+            className={`p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer ${
+              numberPage === currentPage && "bg-gray-600"
+            }`}
+            key={numberPage}
+          >
+            {numberPage}{" "}
+          </li>
+        ))}
 
         {/* pagina siguiente */}
-        <li onClick={handleClickNextPage} className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer "><i className='bx bxs-right-arrow'></i> </li>
+        <li
+          onClick={handleClickNextPage}
+          className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer "
+        >
+          <i className="bx bxs-right-arrow"></i>{" "}
+        </li>
 
-        {/* ultima pagina */}  
-        <li onClick={() => setCurrentPage(lastPage)} className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer "><i className='bx bx-last-page'></i> </li>
+        {/* ultima pagina */}
+        <li
+          onClick={() => setCurrentPage(lastPage)}
+          className="p-3 text-white bg-black rounded-lg hover:bg-red-600 hover:text-white  transition transform hover:-translate-y-4 motion-reduce:transition-none motion-reduce:hover:transform-none duration-300 cursor-pointer "
+        >
+          <i className="bx bx-last-page"></i>{" "}
+        </li>
       </ul>
-
 
       {/* seccion lista de pokemons*/}
       <section className=" px-2 grid gap-6 grid-cols-[340px] place-content-center mb-10 sm:grid sm:grid-cols-2 sm:gap-6 sm:p-2 sm:w-[640px] sm:mx-auto lg:grid-cols-3 lg:w-[1024px] ">

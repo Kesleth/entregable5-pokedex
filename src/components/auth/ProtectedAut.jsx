@@ -10,7 +10,7 @@ const ProtectedAut = () => {
   if (nameTrainerSlice) {
     return <Outlet />;
   } else {
-    return <Navigate to="/"/>
+    return <Navigate to="/" />;
   }
 };
 

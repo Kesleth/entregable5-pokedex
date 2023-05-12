@@ -5,7 +5,7 @@ const Header = () => {
     <section className="relative">
       <div className="h-20 bg-red-600 grid items-end">
         <div className="max-w-[200px] sm:max-w-[300px] m-2 ">
-            <img src="/images/pokedex.png" alt="" />
+          <img src="/images/pokedex.png" alt="" />
         </div>
       </div>
 
